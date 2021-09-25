@@ -60,4 +60,41 @@ source ~./bashrc
 
 To check that microk8s is running, run `k9s` and  press `0` to list pods from all namespaces. There should be two `calico` pods running in the `kub-system` namespace.
 
-## Install and test Ping service
+# Install and Test the Ping service
+
+Start simple, and install a ping service:
+
+```bash
+k apply -f ping.yaml
+
+deployment.apps/ping-server created
+service/ping-server created
+```
+
+Check that the ping pod is created:
+
+```bash
+k get pods
+
+NAME                           READY   STATUS    RESTARTS   AGE
+ping-server-8587f5677d-9pg66   1/1     Running   0          86s
+```
+Initially the new pod is will in a Creating state, and then after a few seconds it will transition to a Running state. 
+
+A pod is an emphemeral objects (comes and goes) and the normal way to interact with the pod is via a kubernetes service. You can see list the service using the command:
+
+```bash
+k get services
+
+NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+kubernetes    ClusterIP   10.152.183.1    <none>        443/TCP    15m
+ping-server   ClusterIP   10.152.183.23   <none>        8000/TCP   5m9s
+```
+
+Note the IP address of the ping-server, and access it's endpoint to get the current time:
+
+```bash
+curl 10.152.183.23:8000
+
+2021-09-25 21:13:15.970323
+```
