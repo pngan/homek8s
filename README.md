@@ -86,9 +86,9 @@ A pod is an emphemeral object (comes and goes) and the normal way to interact wi
 ```bash
 k get services
 
-NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
-kubernetes    ClusterIP   10.152.183.1    <none>        443/TCP    15m
-ping-server   ClusterIP   10.152.183.23   <none>        8000/TCP   5m9s
+NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes    ClusterIP   10.152.183.1    <none>        443/TCP          49m
+ping-server   NodePort    10.152.183.23   <none>        8000:31000/TCP   39m
 ```
 
 Note the ``CLUSTER-IP`` address and port of the ping-server, and access it's endpoint to get the current UTC:
@@ -99,12 +99,12 @@ curl 10.152.183.23:8000
 2021-09-25 21:13:15.970323
 ```
 
-## Accessing the Ping Service from the 
+## Accessing the Ping Service from the outside the K8s machine
 
 The service is accessible accessible using its `CLUSTER-IP`  from within the cluster only. If you want to access the service from outside the cluster, like from another machine, you can access it using its node port.
 
-To try this out, go to another computer that can access and navigate to the URL:
+To try this out, go to another computer that can access the cluster and from a web browser navigate to the URL:
 
 ```
-<IP adresss or name of K8s machine>:31000
+http://<IP adresss or name of K8s machine>:31000
 ```
