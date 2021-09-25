@@ -17,7 +17,7 @@ Microk8s requires the use of `microk8s kubectl`. For convenience this command ca
 
     alias k='microk8s kubectl'
     alias m='microk8s'
-    alias sudo='sudo '        # Allow alias to work with sudo
+    alias sudo='sudo '        # Allow alias to work with sudo. Note trailing space.
 
 # Setup K9s
 
@@ -81,7 +81,7 @@ ping-server-8587f5677d-9pg66   1/1     Running   0          86s
 ```
 Initially the new pod is will in a Creating state, and then after a few seconds it will transition to a Running state. 
 
-A pod is an emphemeral objects (comes and goes) and the normal way to interact with the pod is via a kubernetes service. You can see list the service using the command:
+A pod is an emphemeral object (comes and goes) and the normal way to interact with the pod is use a kubernetes abstraction of the pods called a service. You can get the service IP address using the command:
 
 ```bash
 k get services
@@ -91,10 +91,20 @@ kubernetes    ClusterIP   10.152.183.1    <none>        443/TCP    15m
 ping-server   ClusterIP   10.152.183.23   <none>        8000/TCP   5m9s
 ```
 
-Note the IP address of the ping-server, and access it's endpoint to get the current time:
+Note the ``CLUSTER-IP`` address and port of the ping-server, and access it's endpoint to get the current UTC:
 
 ```bash
 curl 10.152.183.23:8000
 
 2021-09-25 21:13:15.970323
+```
+
+## Accessing the Ping Service from the 
+
+The service is accessible accessible using its `CLUSTER-IP`  from within the cluster only. If you want to access the service from outside the cluster, like from another machine, you can access it using its node port.
+
+To try this out, go to another computer that can access and navigate to the URL:
+
+```
+<IP adresss or name of K8s machine>:31000
 ```

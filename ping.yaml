@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ping-server
+  name: ping-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ping-server
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: ping-server
+    spec:
+      containers:
+        - image: pngan/ping-server
+          name: ping-server
+          ports:
+            - containerPort: 8000
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+            requests:
+              memory: "32Mi"
+              cpu: "20m"
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ping-server
+  name: ping-server
+spec:
+  type: NodePort
+  ports:
+    - name: "8000"
+      port: 8000
+      targetPort: 8000
+      nodePort: 31000
+  selector:
+    app: ping-server
+status:
+  loadBalancer: {}
