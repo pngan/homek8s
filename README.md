@@ -136,3 +136,8 @@ k apply -f ingress.yaml
 
 ingress.networking.k8s.io/ingress-homeserver created
 ```
+
+![image](https://user-images.githubusercontent.com/4557674/134789967-c586d399-a1f0-46d8-9b5a-4e8692aac4f8.png)
+
+![image](https://user-images.githubusercontent.com/4557674/134789984-f0a1845a-25cc-425c-899b-f56dc1c5f7db.png)
+
