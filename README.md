@@ -150,5 +150,4 @@ This requires `cert-mananager` to retrieve certificates from `Let's Encrypt`, a 
 
 - Visit your site with a web browser e.g. `https://nganfamily.com` At first the certifate will show issuing, but in a minute, `HTTP01` challenge would have completed, an a valid Let's Encrypt certificate would have been issued and stored in the secret store of the k8s cluster.
 
-
-![image](https://user-images.githubusercontent.com/4557674/134793010-61edefdc-5192-4f06-a5ab-6729993ecf69.png)
+<img src="https://user-images.githubusercontent.com/4557674/134793010-61edefdc-5192-4f06-a5ab-6729993ecf69.png" alt="drawing" width="300"/>
