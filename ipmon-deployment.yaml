@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ipmondata
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ipmon
+  name: ipmon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ipmon
+  template:
+    metadata:
+      labels:
+        app: ipmon
+    spec:
+      containers:
+      - args:
+        - dotnet
+        - NetCore.Docker.dll
+        image: pngan/ipmon:latest
+        name: ipmon
+        resources:
+          limits:
+            memory: 128Mi
+            cpu: 600m
+        volumeMounts:
+        - mountPath: /ipmon
+          name: ipmondata            
+        env:
+        - name: OVH_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              name: ovh-secrets
+              key: endpoint
+        - name: OVH_APPLICATION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ovh-secrets
+              key: application_key
+        - name: OVH_APPLICATION_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: ovh-secrets
+              key: application_secret
+        - name: OVH_CONSUMER_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ovh-secrets
+              key: consumer_key
+      restartPolicy: Always
+      volumes:
+      - name: ipmondata
+        persistentVolumeClaim:
+          claimName: ipmondata              

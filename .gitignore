@@ -1,0 +1,6 @@
+/data/certbot
+.env
+etc-pihole
+etc-dnsmasq.d
+ovh.conf
+secret.yaml
