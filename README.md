@@ -113,7 +113,9 @@ http://<IP adresss or name of K8s machine>:31000
 
 Web browsers require `https` to access end-points over the internet. 
 
-This requires `cert-mananager` to retrieve certificates from `Let's Encrypt`, a certifcate issuer, and an ingress controller.
+To implement this, you must have a Domain Name registered to you, and a DNS entry that redirects traffic to that Domain Name to the incoming gateway to your K8s cluster. The gateway should then forward traffic through its NAT to the K8s cluster. Set the NAT routing to route `HTTP` traffic to port `30000` of the cluster machine, and `HTTPS` traffic to port `30001` of the cluster machine.  These port values are defined in `nginx-ingress-deploy.yaml`. 
+
+This implementation uses [`cert-manager`](https://cert-manager.io/docs/installation/) to retrieve certificates from `Let's Encrypt`, and provide a qualified response to the `HTTP01` challenge issued from Let's Encrypt to validate the site. Cert-manager automatically updates the certificates before it's expiry date, so there is nothing required to be done to manually keep the certificates up to date.
 
 - Install cert-manager
 
@@ -128,9 +130,6 @@ This requires `cert-mananager` to retrieve certificates from `Let's Encrypt`, a 
 
     clusterissuer.cert-manager.io/letsencrypt-prod created
     ```
-
-- Set the NAT routing of the external modem to route `HTTP` traffic to port `30000` of the cluster machine, and `HTTPS` traffic to port `30001` of the cluster machine.  These port values are defined in `nginx-ingress-deploy.yaml`
-
 
 - Apply Certificate ClusterIssuer:
 
