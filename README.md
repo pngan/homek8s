@@ -79,7 +79,7 @@ k get pods
 NAME                           READY   STATUS    RESTARTS   AGE
 ping-server-8587f5677d-9pg66   1/1     Running   0          86s
 ```
-Initially the new pod is will in a Creating state, and then after a few seconds it will transition to a Running state. 
+Initially the new pod is will in a `ContainerCreating` state, and then after a few seconds it will transition to the `Running` state. 
 
 A pod is an emphemeral object (comes and goes) and the normal way to interact with the pod is use a kubernetes abstraction of the pods called a service. You can get the service IP address using the command:
 
@@ -99,12 +99,40 @@ curl 10.152.183.23:8000
 2021-09-25 21:13:15.970323
 ```
 
-## Accessing the Ping Service from the outside the K8s machine
+## Accessing the Ping Service from another machine in the same network
 
-The service is accessible accessible using its `CLUSTER-IP`  from within the cluster only. If you want to access the service from outside the cluster, like from another machine, you can access it using its node port.
+In the above section the `CLUSTER-IP` (10.152.X.X) are Virtup IP's routable from within the cluster only. If you want to access the service from outside the cluster, like from another machine, you can access it another way. There are [various other ways](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) (loadbalancer, external name), but we will use a `nodeport`.
 
-To try this out, go to another computer that can access the cluster and from a web browser navigate to the URL:
+A nodeport is set up in `ping.yaml` and to try this out, go to another computer that can access the cluster machine and from a web browser within the same network as the k8s server and navigate to the URL:
 
 ```
 http://<IP adresss or name of K8s machine>:31000
+```
+
+## Accessing the Ping Service via https
+
+Web browsers require `https` to access end-points over the internet. 
+
+This requires `cert-mananager` to retrieve certificates from `Let's Encrypt`, a certifcate issuer, and an ingress controller.
+
+Install cert-manager
+
+```
+k apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml
+```
+
+Apply Certificate ClusterIssuer:
+
+```bash
+k apply -f clusterissuer.yaml
+
+clusterissuer.cert-manager.io/letsencrypt-prod created
+```
+
+Apply Ingress:
+
+```bash
+k apply -f ingress.yaml
+
+ingress.networking.k8s.io/ingress-homeserver created
 ```
