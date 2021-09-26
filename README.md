@@ -137,7 +137,7 @@ This requires `cert-mananager` to retrieve certificates from `Let's Encrypt`, a 
     ```bash
     k apply -f clusterissuer.yaml
 
-    clusterissuer.cert-manager.io/letsencrypt-prod created
+    <many lines not shown>
     ```
 
 - Apply Ingress:
