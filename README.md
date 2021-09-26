@@ -115,29 +115,37 @@ Web browsers require `https` to access end-points over the internet.
 
 This requires `cert-mananager` to retrieve certificates from `Let's Encrypt`, a certifcate issuer, and an ingress controller.
 
-Install cert-manager
+- Install cert-manager
 
-```
-k apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml
-```
+    ```
+    k apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml
+    ```
 
-Apply Certificate ClusterIssuer:
+- Install nginx Ingress Controller
 
-```bash
-k apply -f clusterissuer.yaml
+    ```bash
+    k apply -f nginx-ingress-deploy.yaml
 
-clusterissuer.cert-manager.io/letsencrypt-prod created
-```
+    clusterissuer.cert-manager.io/letsencrypt-prod created
+    ```
 
-Apply Ingress:
+- Set the NAT routing of the external modem to route `HTTP` traffic to port `30000` of the cluster machine, and `HTTPS` traffic to port `30001` of the cluster machine.  These port values are defined in `nginx-ingress-deploy.yaml`
 
-```bash
-k apply -f ingress.yaml
 
-ingress.networking.k8s.io/ingress-homeserver created
-```
+- Apply Certificate ClusterIssuer:
 
-![image](https://user-images.githubusercontent.com/4557674/134789967-c586d399-a1f0-46d8-9b5a-4e8692aac4f8.png)
+    ```bash
+    k apply -f clusterissuer.yaml
 
-![image](https://user-images.githubusercontent.com/4557674/134789984-f0a1845a-25cc-425c-899b-f56dc1c5f7db.png)
+    clusterissuer.cert-manager.io/letsencrypt-prod created
+    ```
 
+- Apply Ingress:
+
+    ```bash
+    k apply -f ingress.yaml
+
+    ingress.networking.k8s.io/ingress-homeserver created
+    ```
+
+- Visit your site with a web browser e.g. `https://nganfamily.com` At first the certifate will show issuing, but in a minute, `HTTP01` challenge would have completed, an a valid Let's Encrypt certificate would have been issued and stored in the secret store of the k8s cluster.
