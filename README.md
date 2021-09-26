@@ -19,7 +19,7 @@ Microk8s requires the use of `microk8s kubectl`. For convenience this command ca
     alias m='microk8s'
     alias sudo='sudo '        # Allow alias to work with sudo. Note trailing space.
 
-## Install microk*s add-ons
+## Install microk8s add-ons
 
 Various microK8s add-ons are required for this server. They can all be enabled in one command:
 
