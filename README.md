@@ -114,7 +114,7 @@ In the above section the `CLUSTER-IP` (10.152.X.X) are Virtup IP's routable from
 A nodeport is set up in `ping.yaml` and to try this out, go to another computer that can access the cluster machine and from a web browser within the same network as the k8s server and navigate to the URL:
 
 ```
-http://<IP adresss or name of K8s machine>:31000
+http://<homek8s-servername>:31000
 ```
 
 ## Accessing the Ping Service via https
