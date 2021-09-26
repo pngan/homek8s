@@ -183,7 +183,7 @@ http:<homek8s-servername>:32543
 
 # Keep DNS A entry up to date
 
-Occassionally, the ISP for the home modem will be assigned a new public IP Address. When this happens, the CNAME DNS entry for the Domain Name needs to be updated so that traffic arrives to the `homeK8s` server correctly.
+Occassionally, the ISP for the home modem will be assigned a new public IP Address. When this happens, the A DNS entry for the Domain Name needs to be updated so that traffic arrives to the `homeK8s` server correctly.
 
 This is performed by a [small worker app](https://github.com/pngan/external-ip-monitor) that checks hourly if the public IP address changes, and if so updates the DNS A record held at the `OVH` Domain Registry. This app is specific to the `OVH` Domain Name Registry, so it is not applicable in the general case.
 
