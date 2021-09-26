@@ -155,7 +155,7 @@ This implementation uses [`cert-manager`](https://cert-manager.io/docs/installat
     ingress.networking.k8s.io/ingress-homeserver created
     ```
 
-- Visit your site with a web browser e.g. `https://nganfamily.com` At first the certifate will show issuing, but in a minute, `HTTP01` challenge would have completed, an a valid Let's Encrypt certificate would have been issued and stored in the secret store of the k8s cluster.
+- Visit your site with a web browser e.g. `https://nganfamily.com` At first the certificate will show `issuing`, but in a minute, `HTTP01` challenge would have completed, an a valid Let's Encrypt certificate would have been issued and stored in the secret store of the k8s cluster.
 
     <img src="https://user-images.githubusercontent.com/4557674/134793010-61edefdc-5192-4f06-a5ab-6729993ecf69.png" alt="drawing" width="300"/>
 
@@ -181,9 +181,9 @@ The `seq` logs can be viewed by browsing on the local network to:
 http:<homek8s-servername>:32543
 ```
 
-# Keep DNS A entry up to date
+# Update DNS A record automatically
 
-Occassionally, the ISP for the home modem will be assigned a new public IP Address. When this happens, the A DNS entry for the Domain Name needs to be updated so that traffic arrives to the `homeK8s` server correctly.
+Occassionally, the ISP for the home modem will be assigned a new public IP Address. When this happens, the A DNS record for the Domain Name needs to be updated so that traffic arrives to the `homeK8s` server correctly.
 
 This is performed by a [small worker app](https://github.com/pngan/external-ip-monitor) that checks hourly if the public IP address changes, and if so updates the DNS A record held at the `OVH` Domain Registry. This app is specific to the `OVH` Domain Name Registry, so it is not applicable in the general case.
 
