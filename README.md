@@ -221,6 +221,7 @@ persistentvolumeclaim/ipmondata created
 deployment.apps/ipmon created
 ```
 
+---
 
 <a name="ingress-footnote">[1]</a>:
 The primary source of information for the installation of the Ingress Controller and Ingress Configure is the Pluralsight course by Anthony Nocentino, [Configuring and Managing Kubernetes Networking, Services, and Ingress](https://app.pluralsight.com/library/courses/configuring-managing-kubernetes-networking-services-ingress/table-of-contents). 
