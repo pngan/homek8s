@@ -221,6 +221,19 @@ persistentvolumeclaim/ipmondata created
 deployment.apps/ipmon created
 ```
 
+# Install Developer Edition of SQL Server
+
+Install the Developer Edition of SQL Server 2019 as a platform to try out SQL experiments. This exposes SQL server on the nodeport `31433`.
+
+```bash
+k apply -f sqlserver.yaml
+
+persistentvolumeclaim/sqldata created
+deployment.apps/sqlserver created
+service/sqlserver created
+service/sqlserver-nodeport created
+```
+
 ---
 
 <a name="ingress-footnote">[1]</a>:
