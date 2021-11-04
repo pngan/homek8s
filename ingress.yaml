@@ -11,6 +11,7 @@ spec:
   tls:
   - hosts:
     - nganfamily.com
+    - loadtest.nganfamily.com
     secretName: letsencrypt-prod
   rules:
     - host: nganfamily.com
@@ -23,3 +24,13 @@ spec:
                 name: ping-server
                 port:
                   number: 8000
+    - host: loadtest.nganfamily.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: loadtest
+                port:
+                  number: 8001
