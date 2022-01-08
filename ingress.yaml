@@ -34,3 +34,13 @@ spec:
                 name: loadtest
                 port:
                   number: 8001
+    - host: shop.nganfamily.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: loadtest
+                port:
+                  number: 8001
