@@ -121,7 +121,7 @@ http://<homek8s-servername>:31000
 
 Web browsers require `https` to access end-points over the internet. 
 
-To implement this, you must have a Domain Name registered to you, and a DNS entry that redirects traffic to that Domain Name to the incoming gateway to your K8s cluster. The gateway should then forward traffic through its NAT to the K8s cluster. Set the NAT routing to route `HTTP` traffic to port `30000` of the cluster machine, and `HTTPS` traffic to port `30001` of the cluster machine.  These port values are defined in `nginx-ingress-deploy.yaml`. 
+To implement this, you must have a Domain Name registered to you, and a DNS entry that redirects traffic to that Domain Name to the incoming gateway to your K8s cluster.
 
 
 This implementation [[1]](#ingress-footnote) uses [`cert-manager`](https://cert-manager.io/docs/installation/) to retrieve certificates from `Let's Encrypt`, and provide a qualified response to the `HTTP01` challenge issued from Let's Encrypt to validate the site. Cert-manager automatically updates the certificates before it's expiry date, so there is nothing required to be done to manually keep the certificates up to date.
@@ -155,6 +155,17 @@ This implementation [[1]](#ingress-footnote) uses [`cert-manager`](https://cert-
 
     ingress.networking.k8s.io/ingress-homeserver created
     ```
+ 
+Once traffic arrives to the home router, this should then forward traffic through it's NAT to the K8s cluster. Set the NAT routing to port foward `HTTP` traffic to port `30000` of the cluster machine, and `HTTPS` traffic to port `30001` of the cluster machine.  These port values are defined in `nginx-ingress-deploy.yaml`. To verify that ports `30000` and `30001`, need to be forwarded to ports 80 and 443, respectively, we can view the port mapping of the ingress controller nodeport.
+
+```bash
+k get all -n ingress-nginx
+
+NAME                                         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+service/ingress-nginx-controller-admission   ClusterIP   10.152.183.42    <none>        443/TCP                      39d
+service/ingress-nginx-controller             NodePort    10.152.183.223   <none>        80:30000/TCP,443:30001/TCP   39d
+```
+
 
 - Visit your site with a web browser e.g. `https://nganfamily.com` At first the certificate will show `issuing`, but in a minute, `HTTP01` challenge would have completed, an a valid Let's Encrypt certificate would have been issued and stored in the secret store of the k8s cluster.
 
