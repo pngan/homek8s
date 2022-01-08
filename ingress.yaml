@@ -12,6 +12,7 @@ spec:
   - hosts:
     - nganfamily.com
     - loadtest.nganfamily.com
+    - shop.nganfamily.com
     secretName: letsencrypt-prod
   rules:
     - host: nganfamily.com
